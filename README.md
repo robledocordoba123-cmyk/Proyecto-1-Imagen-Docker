@@ -60,3 +60,7 @@ El repositorio incluye un workflow de GitHub Actions (`.github/workflows/ci.yml`
 - Capturas de las respuestas de los 5 endpoints (`GET`, `GET/:id`, `POST`, `PUT`, `DELETE`).
 - Captura de `docker logs tienda-api`.
 - Captura del workflow de GitHub Actions ejecutado correctamente.
+
+## Autor
+
+Manuela Cordoba
