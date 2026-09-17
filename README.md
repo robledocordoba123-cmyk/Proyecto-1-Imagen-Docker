@@ -56,10 +56,61 @@ El repositorio incluye un workflow de GitHub Actions (`.github/workflows/ci.yml`
 
 ## Evidencias
 
-- Captura de `docker ps` mostrando el contenedor `tienda-api` en ejecución.
-- Capturas de las respuestas de los 5 endpoints (`GET`, `GET/:id`, `POST`, `PUT`, `DELETE`).
-- Captura de `docker logs tienda-api`.
-- Captura del workflow de GitHub Actions ejecutado correctamente.
+### Creación del repositorio y configuración del entorno
+Se crea el repositorio en GitHub y se habilita la ejecución de scripts en PowerShell (`Set-ExecutionPolicy`) para poder usar `npm`.
+
+![Repositorio creado](evidencias/e01.png)
+![Configuración del entorno](evidencias/e02.png)
+
+### Primer commit del código de la API
+Se agrega el código fuente de la API en Express y se confirma que el servidor arranca correctamente en el puerto 3000.
+
+![Commit del código](evidencias/e03.png)
+![Servidor escuchando](evidencias/e04.png)
+
+### Dockerfile y construcción de la imagen
+Se agrega el `Dockerfile` y `.dockerignore`, y se construye la imagen `tienda-api:1.0` con éxito.
+
+![Commit del Dockerfile](evidencias/e05.png)
+![Build de la imagen](evidencias/e06.png)
+
+### Resolución de conflictos de puerto durante las pruebas
+Al ejecutar el contenedor se detectó que el puerto 3000 ya estaba en uso por otro contenedor de una máquina distinta; se identifica y detiene el contenedor en conflicto para liberar el puerto.
+
+![Conflicto de puerto](evidencias/e07.png)
+![docker ps -a](evidencias/e08.png)
+![Contenedor detenido en conflicto](evidencias/e09.png)
+![Resolución del conflicto](evidencias/e10.png)
+
+### Contenedor en ejecución
+Con el puerto liberado, el contenedor `tienda-api` queda corriendo correctamente y publicado en el puerto 3000 de la máquina.
+
+![docker ps mostrando el contenedor en ejecución](evidencias/e11.png)
+
+### Pruebas de los 5 endpoints CRUD
+Se prueban los 5 endpoints (`GET /products`, `GET /products/:id`, `POST`, `PUT`, `DELETE`) con `curl`, obteniendo los códigos de estado esperados (200, 201, 204).
+
+![GET listar productos](evidencias/e12.png)
+![GET producto por id](evidencias/e13.png)
+![POST crear producto](evidencias/e14.png)
+![PUT actualizar producto](evidencias/e15.png)
+![DELETE eliminar producto](evidencias/e16.png)
+
+### Logs del contenedor y pipeline CI/CD
+Se revisan los logs del contenedor y se agrega el workflow de GitHub Actions que construye la imagen automáticamente.
+
+![docker logs](evidencias/e17.png)
+![Commit del pipeline CI](evidencias/e18.png)
+
+### Flujo de Pull Request
+Se crea una rama corta (`docs/agregar-autor`), se abre un Pull Request hacia `main`, el pipeline de CI se ejecuta automáticamente sobre el PR y, tras verificar que pasa, se fusiona.
+
+![Rama y push](evidencias/e19.png)
+![Pull Request creado](evidencias/e20.png)
+![CI ejecutado en el PR](evidencias/e21.png)
+![Verificación de la fusión](evidencias/e22.png)
+![Pull Request en revisión](evidencias/e23.png)
+![Pull Request fusionado](evidencias/e24.png)
 
 ## Autor
 
