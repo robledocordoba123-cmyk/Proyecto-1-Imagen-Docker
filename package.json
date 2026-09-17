@@ -1,0 +1,12 @@
+{
+  "name": "proyecto-1-imagen-docker",
+  "version": "1.0.0",
+  "description": "API REST de productos empaquetada en una imagen Docker propia",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
