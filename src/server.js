@@ -12,33 +12,53 @@ let products = [
 
 // GET /products -> listar todos los productos
 app.get('/products', (req, res) => {
-  // TODO: devolver el arreglo "products" completo
+  res.json(products);
 });
 
 // GET /products/:id -> obtener un producto por id
 app.get('/products/:id', (req, res) => {
-  // TODO: buscar el producto por id
-  // Si no existe, responder 404
+  const id = Number(req.params.id);
+  const product = products.find((p) => p.id === id);
+  if (!product) {
+    return res.status(404).json({ error: 'Producto no encontrado' });
+  }
+  res.json(product);
 });
 
 // POST /products -> crear un producto
 app.post('/products', (req, res) => {
-  // TODO: leer req.body (name, price), validar campos
-  // Crear un nuevo id, agregarlo a "products" y responder 201
+  const { name, price } = req.body;
+  const newProduct = {
+    id: products.length ? products[products.length - 1].id + 1 : 1,
+    name,
+    price,
+  };
+  products.push(newProduct);
+  res.status(201).json(newProduct);
 });
 
 // PUT /products/:id -> actualizar un producto
 app.put('/products/:id', (req, res) => {
-  // TODO: buscar el producto por id
-  // Si no existe, responder 404
-  // Si existe, actualizar name/price y responder el producto actualizado
+  const id = Number(req.params.id);
+  const product = products.find((p) => p.id === id);
+  if (!product) {
+    return res.status(404).json({ error: 'Producto no encontrado' });
+  }
+  const { name, price } = req.body;
+  product.name = name;
+  product.price = price;
+  res.json(product);
 });
 
 // DELETE /products/:id -> eliminar un producto
 app.delete('/products/:id', (req, res) => {
-  // TODO: buscar el producto por id
-  // Si no existe, responder 404
-  // Si existe, eliminarlo del arreglo y responder 204 (sin contenido)
+  const id = Number(req.params.id);
+  const index = products.findIndex((p) => p.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'Producto no encontrado' });
+  }
+  products.splice(index, 1);
+  res.status(204).send();
 });
 
 app.listen(PORT, () => {
